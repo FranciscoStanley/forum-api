@@ -19,13 +19,10 @@ export class UserController {
   @Post()
   async createUser(@Body() userData: Prisma.UserCreateInput): Promise<string> {
     try {
-      const message = await this.userService.createUser(userData);
-      return message;
+      const res = await this.userService.createUser(userData);
+      return res;
     } catch (error) {
-      throw new HttpException(
-        'Erro ao criar usuário',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+      throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
@@ -38,10 +35,7 @@ export class UserController {
       }
       return user;
     } catch (error) {
-      throw new HttpException(
-        'Erro ao buscar usuário',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+      throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
@@ -51,33 +45,23 @@ export class UserController {
     @Param('id') id: string,
   ): Promise<string> {
     try {
-      const message = await this.userService.updateUserById(
-        Number(id),
-        userData,
-        {
-          where: { id: Number(id) },
-          data: userData,
-        },
-      );
-      return message;
+      const res = await this.userService.updateUserById(Number(id), userData, {
+        where: { id: Number(id) },
+        data: userData,
+      });
+      return res;
     } catch (error) {
-      throw new HttpException(
-        'Erro ao atualizar usuário',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+      throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
   @Delete(':id')
   async deleteUserById(@Param('id') id: string): Promise<string> {
     try {
-      const message = await this.userService.deleteUserById({ id: Number(id) });
-      return message;
+      const res = await this.userService.deleteUserById({ id: Number(id) });
+      return res;
     } catch (error) {
-      throw new HttpException(
-        'Erro ao excluir usuário',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+      throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 }
