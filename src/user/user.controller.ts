@@ -6,15 +6,17 @@ import {
   HttpException,
   HttpStatus,
   Param,
+  Patch,
   Post,
-  Put,
+  UseGuards,
 } from '@nestjs/common';
 import { Prisma, User as UserModel } from '@prisma/client';
 import { UserService } from './user.service';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @Controller('user')
 export class UserController {
-  constructor(private userService: UserService) {}
+  constructor(private readonly userService: UserService) {}
 
   @Post()
   async createUser(@Body() userData: Prisma.UserCreateInput): Promise<string> {
@@ -26,6 +28,7 @@ export class UserController {
     }
   }
 
+  @UseGuards(AuthGuard)
   @Get(':id')
   async getUserById(@Param('id') id: string): Promise<UserModel> {
     try {
@@ -39,7 +42,8 @@ export class UserController {
     }
   }
 
-  @Put(':id')
+  @UseGuards(AuthGuard)
+  @Patch(':id')
   async updateUserById(
     @Body() userData: Prisma.UserUpdateInput,
     @Param('id') id: string,
@@ -55,6 +59,7 @@ export class UserController {
     }
   }
 
+  @UseGuards(AuthGuard)
   @Delete(':id')
   async deleteUserById(@Param('id') id: string): Promise<string> {
     try {

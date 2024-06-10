@@ -12,8 +12,7 @@ import { AuthService } from './auth.service';
 
 @Controller('auth')
 export class AuthController {
-  @Inject()
-  private readonly authService: AuthService;
+  constructor(private readonly authService: AuthService) {}
 
   @Post('signin')
   @HttpCode(HttpStatus.OK)

@@ -14,32 +14,32 @@ datasource db {
 }
 
 model User {
-  id        Int         @default(autoincrement()) @id
+  id        Int         @id @default(autoincrement())
   email     String      @unique
   name      String?
   password  String
-  createAt  DateTime    @default(now())
-  updateAt  DateTime    @updatedAt
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
   questions Questions[]
   answers   Answers[]
 }
 
 model Questions {
-  id       Int       @default(autoincrement()) @id
-  title    String
-  body     String
-  createAt DateTime  @default(now())
-  updateAt DateTime  @updatedAt
-  userId   Int
-  user     User      @relation(fields: [userId], references: [id])
-  answers  Answers[]
+  id        Int       @id @default(autoincrement())
+  title     String
+  body      String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  userId    Int
+  user      User      @relation(fields: [userId], references: [id])
+  answers   Answers[]
 }
 
 model Answers {
-  id         Int       @default(autoincrement()) @id
+  id         Int       @id @default(autoincrement())
   body       String
-  createAt   DateTime  @default(now())
-  updateAt   DateTime  @updatedAt
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
   userId     Int
   questionId Int
   user       User      @relation(fields: [userId], references: [id])
