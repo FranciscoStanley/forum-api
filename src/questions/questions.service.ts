@@ -6,6 +6,7 @@ import { PrismaService } from 'src/database/prisma.service';
 @Injectable()
 export class QuestionsService {
   constructor(private prisma: PrismaService) {}
+
   async create(createQuestionDto: CreateQuestionDto, userId: number) {
     return await this.prisma.questions.create({
       data: { ...createQuestionDto, userId },

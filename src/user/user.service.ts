@@ -5,8 +5,7 @@ import { PrismaService } from 'src/database/prisma.service';
 
 @Injectable()
 export class UserService {
-  @Inject()
-  private readonly prisma: PrismaService;
+  constructor(private prisma: PrismaService) {}
 
   async getUserById(
     userWhereUniqueInput: Prisma.UserWhereUniqueInput,
@@ -65,7 +64,6 @@ export class UserService {
     const { where, data } = params;
 
     try {
-      
       if (typeof data.password === 'string') {
         const saltOrRounds = 10;
         const hashPassword = await bcrypt.hash(data.password, saltOrRounds);
