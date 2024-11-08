@@ -47,6 +47,7 @@ export class UserService {
           password: hashPassword,
         },
       });
+      
       return 'Usuário criado com sucesso.';
     } catch (error) {
       throw new Error(`Erro ao criar usuário: ${error.message}`);
