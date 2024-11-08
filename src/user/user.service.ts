@@ -33,6 +33,12 @@ export class UserService {
         where: {
           email: data.email,
         },
+        select: {
+          id: true,
+          email: true,
+          name: true,
+          password: false,
+        },
       });
 
       if (existingEmail) {
@@ -47,7 +53,7 @@ export class UserService {
           password: hashPassword,
         },
       });
-      
+
       return 'Usuário criado com sucesso.';
     } catch (error) {
       throw new Error(`Erro ao criar usuário: ${error.message}`);
